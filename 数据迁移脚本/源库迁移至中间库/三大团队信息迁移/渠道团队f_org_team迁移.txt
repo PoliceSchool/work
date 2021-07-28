@@ -1,0 +1,29 @@
+-- 门店信息
+select
+    b_agency_stores.store_name as `name`,
+    b_agencies.token as `cooperation_code`,
+    b_agencies.b_agenciesId as `org_id`,
+    create() as `create_time`,
+    b_agency_stores.b_agency_storesId as `create_person`,
+    now() as `update_time`,
+    null as `update_person`,
+    0 as `dr`,
+    concat(b_agency_stores.owner_mobile_tel, b_agency_stores.manager_name) as `cooperation`,
+    '门店' as `team_type`
+FROM b_agency_stores JOIN b_agencies ON b_agency_stores.agencies_id = b_agencies.b_agenciesId
+WHERE b_agencies.`status` = 1 AND b_agency_stores.`status` = 1;
+union all
+-- 中介公司、合作伙伴、代理公司团队
+select
+    Text as `name`,
+    ScopeId as `cooperation_code`,
+    myParamValueId as `org_id`,
+    now() as `create_time`,
+    myParamValueId as `create_person`,
+    now() as `update_time`,
+    '9999' `update_person`,
+    0 as `dr`,
+    ParamCode as `cooperation`,
+    ParamCode as `team_type`
+FROM myparamvalue
+WHERE ParamCode IN ('agencyCompany','agentCompany','partnerCompany');

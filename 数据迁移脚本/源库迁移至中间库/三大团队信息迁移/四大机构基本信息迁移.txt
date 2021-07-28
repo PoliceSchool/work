@@ -1,0 +1,79 @@
+select
+    case
+      when ParamCode = 'partnerCompany' then 1001
+      when ParamCode = 'agentCompany' then 1001
+      when ParamCode = 'agencyCompany' then 1001
+    end as `app_id`,
+    Text  as `name`,
+    case
+      when ParamCode = 'partnerCompany' then '合作伙伴'
+      when ParamCode = 'agentCompany' then '代理公司'
+      when ParamCode = 'agencyCompany' then '中介公司'
+    end as `short_name`,
+    null as `legal_man`,
+    null as `org_code`,
+    null as `bank_account`,
+    null as `bank_card_no`,
+    null as `bank_name`,
+    null as `bank_address`,
+    null as `org_type`,
+    null as `src`,
+    ScopeId as `description`,
+    null as `cooperation_code`,
+    null as `extra_params`,
+    1 as `examine_status`,
+    1 as `state`,
+    myParamValueId as `outer_id`,
+    null as `detail_address`,
+    null as `address_code`,
+    0 as `deleted`,
+    '9999' as `creator`,
+    now() as `create_time`,
+    '9999' as `update_person`,
+    now() as `update_time`,
+    null as `channel`,
+    null as `account_id`,
+    null as `on_site`
+FROM myparamvalue WHERE ParamCode IN ('agencyCompany','agentCompany','partnerCompany')
+union all
+select
+        1001 as `app_id`,
+        agency_name  as `name`,
+    '中介机构' as `short_name`,
+        person_in_charge as `legal_man`,
+        mobile_tel as `org_code`,
+    (
+        CASE mobile_auth
+        WHEN 0 THEN
+        '全号查看'
+        WHEN 1 THEN
+        '非全号查看'
+        END
+    ) as `bank_account`,
+    null as `bank_card_no`,
+    null as `bank_name`,
+    null as `bank_address`,
+    null as `org_type`,
+    null as `src`,
+    token as `description`,
+    null as `cooperation_code`,
+    null as `extra_params`,
+    (CASE STATUS
+        WHEN 0 THEN 0 -- 待审核
+        WHEN 1 THEN 1 -- 审核通过
+        WHEN 2 THEN 2 -- 审核不通过
+        WHEN 3 THEN 3 -- 删除
+    END) as `examine_status`,
+    1 as `state`,
+    b_agenciesId as `outer_id`,
+    null as `detail_address`,
+    null as `address_code`,
+    0 as `deleted`,
+    '9999' as `creator`,
+    now() as `create_time`,
+    '9999' as `update_person`,
+    now() as `update_time`,
+    null as `channel`,
+    null as `account_id`,
+    null as `on_site`
+FROM b_agencies; 

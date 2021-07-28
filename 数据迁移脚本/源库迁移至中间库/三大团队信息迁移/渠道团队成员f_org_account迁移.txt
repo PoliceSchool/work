@@ -1,0 +1,40 @@
+-- 中介团队成员
+select
+    b_agencies.b_agenciesId as `org_id`,
+    b_regbroker.b_regbrokerId as `account_id`,
+    b_agency_stores.b_agency_storesId as `team_id`,
+    1 as `state`,
+    null as `src`,
+    '中介机构团队成员' as `remark`,
+    now() as `create_time`,
+    now() as `update_time`,
+    '9999' as `create_person`,
+    '9999' as `update_person`,
+    0 as `dr`,
+    null as `is_admin`,
+FROM
+b_agency_stores
+JOIN b_agencies ON b_agency_stores.agencies_id = b_agencies.b_agenciesId
+JOIN b_agencystore2regbroker ON b_agencystore2regbroker.agency_stores_Id = b_agency_stores.b_agency_storesId
+JOIN b_regbroker ON b_agencystore2regbroker.regbroker_id = b_regbroker.b_regbrokerId
+WHERE
+b_agencies.`status` = 1 AND b_agency_stores.`status` = 1 AND b_agencystore2regbroker.`status` = 1
+union all
+-- 中介公司、代理公司、合作伙伴经纪人关系
+select
+    myparamvalue.myParamValueId as `org_id`,
+    b_regbroker.b_regbrokerId as `account_id`,
+    myparamvalue.myParamValueId as `team_id`,
+    1 as `state`,
+    null as `src`,
+    ParamCode as `remark`,
+    now() as `create_time`,
+    now() as `update_time`,
+    '9999' as `create_person`,
+    '9999' as `update_person`,
+    0 as `dr`,
+    null as `is_admin`
+FROM b_regbroker JOIN myparamvalue ON myparamvalue.`Value` = b_regbroker.BelongsCompany 
+        AND myparamvalue.ScopeId = b_regbroker.token
+WHERE b_regbroker.capacity_des IN ('9006', '9003', '9005')
+AND myparamvalue.ParamCode IN ('agencyCompany','agentCompany','partnerCompany');

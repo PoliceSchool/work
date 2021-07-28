@@ -1,0 +1,36 @@
+-- 行销基本信息
+select
+    name as `TEAM_NAME`,
+    '行销' as `PROJECT_TYPE`,
+    now() as `CREATE_DATE`,
+    now() as `UPDATE_DATE`,
+    '9999' as `CREATE_BY`,
+    '9999' as `UPDATE_BY`,
+    uuid as `AVATAR`,
+    '1' as `TEAM_TYPE`,
+    null as `ORG_GUID`,
+    0 as `DR`,
+    null as `DELETE_DATE`
+from m_team
+
+        # 行销团队关联项目：项目ID、项目名称、团队ID、团队名称
+        select
+        tp.proj_id as '项目ID',
+        p.ProjName as '项目名称',
+        t.uuid as '团队ID',
+        t.name as '团队名称'
+        from m_team2proj as tp
+        INNER JOIN m_team t on tp.team_id = t.id
+        INNER JOIN p_project p on tp.proj_id = p.p_projectId;
+
+-- 行销团队成员表需要新建中间表，因为团队成员涉及到角色和分组，目标表没有，需要把这份数据存放在中间库
+select
+    t.uuid as `team_id`,
+    m.uuid as `user_id`,
+    null as `is_leader`,
+    null as `group_id`,
+    tm.deleted_state as `dr`,
+    dt_timestamp as `delete_date`
+from m_team2member as tm
+INNER JOIN m_team t on tm.team_id = t.id
+INNER JOIN m_member m on tm.member_id = m.id;  

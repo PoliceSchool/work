@@ -1,0 +1,191 @@
+
+    select
+    1004 as `app_id`,
+    null as `agent_product_id`,
+    null as `org_id`,
+    -- todo s_sales_team.sales_teamId, 连表查询团队表
+    null as `team_id`,
+    null as `product_id`,
+    s_opportunity.s_opportunityId as `product_name`,
+    p_project.p_projectId as `project_id`,
+    10041 as `type`,
+    s_user.s_userId as `account_id`,
+    s_user.user_name as `referrer_name`,
+    s_user.mobile_tel as `referrer_mobile`,
+    null as `referrer_id_card_no`,
+    s_customer.s_customerId as `account_id2`,
+    s_customer.cst_name as `name`,
+    case
+        when s_customer.gender = '男' then 1
+        when s_customer.gender = '女' then 0
+    end as `gender`,
+    s_customer.mobile_tel as `mobile`,
+    null as `appointment_time`,
+            s_sales_team.s_sales_teamId as `counselor_id`,
+            s_sales_team.sales_team_name as `counselor_name`,
+            s_user.mobile_tel as `counselor_mobile`,
+    null as `share_account_id`,
+    null as `share_mobile`,
+    CASE
+        WHEN s_opportunity.stage_id = '2' THEN 10
+        WHEN s_opportunity.stage_id = '3' THEN 30
+        WHEN s_opportunity.stage_id = '4' THEN 40
+        WHEN s_opportunity.stage_id = '5' THEN 50
+        WHEN s_opportunity.stage_id = '6' THEN 60
+        ELSE ''
+    END AS `clue_status`,
+    (case
+        WHEN s_opportunity.stage_id = '2' THEN '已提交'
+        WHEN s_opportunity.stage_id = '3' THEN '已到访'
+        WHEN s_opportunity.stage_id = '4' THEN '已认筹'
+        WHEN s_opportunity.stage_id = '5' THEN '已认购'
+        WHEN s_opportunity.stage_id = '6' THEN '已签约'
+    else -1 end) as `status_name`,
+    1 as `success`,
+    0 as `deleted`,
+    null as `relationship_name`,
+    null as `relationship_mobile`,
+    null as `relationship_sex`,
+    null as `relationship`,
+    s_opportunity.DESC as `description`,
+    null as `extra_params`,
+    1 as `expired`,
+    null as `expired_time`,
+    null as `expired_msg`,
+    null as `follow_up_time`,
+    null as `channel_type`,
+    null as `channel_name`,
+    null as `qrcode_template_id`,
+    now() as `create_time`,
+    now() as `update_time`,
+    '系统数据迁移' as `create_person`,
+    '系统数据迁移' as `update_person`,
+    null as `broker_invite_id`,
+    null as `broker_invite_expired_time`,
+    null as `change_team_status`,
+    null as `task_id`,
+    null as `report_area`,
+    null as `bee_user_id`,
+    null as `protect_date`,
+    null as `method`,
+    null as `estate_id`,
+    null as `earliest_call_flag`,
+    null as `capacity`,
+    null as `cust_channel`,
+    -- todo 待云客提供，提供完再连表查询团队表
+    s_sales_team.s_sales_teamId as `BUGUID`,
+    p_project.p_projectId as `ProjGUID`,
+    s_customer.cst_name as `CstName`,
+    s_opportunity.known_id as `MediaName`,
+    s_customer.mobile_tel as `MobileTel`,
+    null as `AssignsNumber`,
+    null as `MeetUserID`,
+    s_opportunity.first_time as `CallDate`,
+    (CASE
+        WHEN s_opportunity.stage_id = '2' THEN 1
+        else 2
+    end) as `Status`,
+    null as `lead_status`,
+    null as `ProductType`,
+    null as `ResiArea`,
+    null as `Content`,
+    null as `SysTimeStamp`,
+    s_opportunity.CreatedOn  as `CreateDate`,
+    9999 as `CreateUserID`,
+    now() as `UpdateDate`,
+    9999 as `UpdateUserID`,
+    null as `MediaParent`,
+    s_opportunity.complete_ratio as `AssignedCause`,
+    null as `AssignsDate`,
+    null as `AskingNumber`,
+    -- todo  通过suer.s_userId连表查person_account表得到自增主键ID
+    null as `FollowUserID`,
+    null as `WXZD`,
+    null as `ReportedChannel`,
+    null as `AssignBroker`,
+    '案场' as `ChildChannel`,
+    null as `FirstMeetUserID`,
+    6 as `RecommendAgentIdentity`,
+    null as `BUGUIDGS`,
+    null as `OperatorID`,
+    null as `OperatorName`,
+    null as `RecommendAgentName`,
+    null as `SynId`,
+    '案场' as `DataSource`,
+    null as `RedisHadDel`,
+    null as `brokerPhone`,
+    null as `idCard`,
+    now() as `create_date`,
+    '系统数据迁移' as `create_by`,
+    now() as `update_date`,
+    '系统数据迁移' as `update_by`,
+    null as `recommendId`,
+    null as `protectRule`,
+    case
+        when s_customer.gender = '男' then 1
+        when s_customer.gender = '女' then 0
+    end as `CstSex`,
+    null as `OrgId`,
+    s_opportunity.type_wishe_ids as `Xqhx`,
+    s_opportunity.price_wishe_ids as `Ghys`,
+    s_customer.work_type_id as `Industry`,
+    s_opportunity.DESC as `Remarks`,
+    s_opportunity.using_id as `Gfyt`,
+    s_opportunity.follow_level as `CustLevel`,
+    s_opportunity.customer_type as `userTypeId`,
+    s_opportunity.recover_time  as `userTypeName`,
+    s_opportunity.s_opportunityId as `wayName`,
+    null as `intention_house_type`,
+    s_opportunity.area_wishe_ids as `intention_area`,
+    s_opportunity.floor_wishe_ids as `channel`,
+    s_customer.home_id as `HomeArea`,
+    s_opportunity.attention_ids as `JZ_SHENG`,
+    s_opportunity.cst_from as `JZ_SHI`,
+    s_customer.address as `JZ_QU`,
+    null as `JZ_ZHEN`,
+    s_customer.work_area_id as `WorkArea`,
+    s_customer.house_count_id as `GZ_SHENG`,
+    null as `GZ_SHI`,
+    null as `GZ_QU`,
+    null as `GZ_ZHEN`,
+    null as `sysjobcode`,
+    null as `AppId`,
+    null as `extraParams`,
+    null as `zituo_label_id`,
+    null as `zituo_method_id`,
+    -- todo 通过m.uuid连表查person_account表得到自增主键ID
+    null as `zituo_submit_user_id`,
+    -- todo 通过m.uuid连表查person_account表得到自增主键ID
+    null as `zituo_report_user_id`,
+    null as `zituo_report_area`,
+    null as `zituo_task_id`,
+    null as `zituo_longitude`,
+    null as `zituo_latitude`,
+    s_opportunity.recover_reason as `lost_reason`,
+    null as `if_scan`,
+    null as `distr_cause`,
+            s_opportunity.first_time as `recent_asking_time`,
+    s_opportunity.recover_count as `event_counter`,
+    null as `project_rule`,
+    now() as `BHQJZRQ`,
+    null as `CreateDate_Follow`,
+    -- todo 通过m.uuid连表查person_account表得到自增主键ID
+    null as `last_follow_user_id`,
+    0 as `del_flag`
+from
+s_opportunity
+LEFT JOIN s_customer ON s_customer.s_customerId = s_opportunity.cst_id
+LEFT JOIN s_user ON s_user.s_userId = s_opportunity.user_id
+LEFT JOIN p_project ON p_project.p_projectId = s_opportunity.proj_id
+LEFT JOIN s_team2user ON s_user.s_userId = s_team2user.user_id AND s_team2user.proj_id = s_opportunity.proj_id
+LEFT JOIN s_sales_team ON s_sales_team.s_sales_teamId = s_team2user.sales_team_id
+LEFT JOIN s_sales_group ON s_sales_group.s_sales_groupId = s_team2user.sales_group_id
+LEFT JOIN s_clue_cst ON s_clue_cst.related_opp_id = s_opportunity.s_opportunityId AND s_clue_cst.confirm_status = 1
+LEFT JOIN s_clue ON s_clue.related_opp_id = s_opportunity.s_opportunityId AND s_clue.confirm_status = '3'
+LEFT JOIN s_clue_related_marketing ON s_clue_related_marketing.clue_id = s_clue.id AND s_clue_related_marketing.confirm_status = '3'
+WHERE
+( s_opportunity.user_id != NULL OR s_opportunity.user_id != '' )
+AND s_opportunity.is_conflict = 0
+AND s_opportunity.is_repeat = 0
+AND s_opportunity.status = 1
+LIMIT 0, 100;

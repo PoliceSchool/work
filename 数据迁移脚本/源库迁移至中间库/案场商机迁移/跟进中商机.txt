@@ -1,0 +1,151 @@
+select
+   CASE WHEN s_clue_cst.confirm_status = 1 THEN 1001
+        WHEN s_clue_related_marketing.confirm_status = '3' THEN 1002
+   ELSE 1005 END as app_id,
+   CASE WHEN s_clue_cst.confirm_status = 1 THEN 1001
+        WHEN s_clue_related_marketing.confirm_status = '3' THEN 1002
+   ELSE 1005 END as `type`,
+   s_customer.s_customerId as `account_id`,
+   CASE WHEN s_clue_cst.confirm_status = 1 THEN s_clue_cst.clue_cst_id
+        WHEN s_clue_related_marketing.confirm_status = '3' THEN s_clue.id
+        ELSE ''
+   END as `clue_id`,
+   null as `product_id`,
+   p_project.p_projectId as `project_id`,
+   null as `extra_info`,
+   0 as `deleted`,
+   s_opportunity.s_opportunityId as `outer_id`,
+   null as `owner_id`,
+   null as `cellphone`,
+   now() as `create_time`,
+   now() as `update_time`,
+   '系统数据迁移' as `create_person`,
+   '系统数据迁移' as `update_person`,
+   null as `agent_org_id`,
+   null as `agent_org_name`,
+   now() as `clue_create_time`,
+   s_opportunity.s_opportunityId as `OppGUID`,
+   s_sales_team.s_sales_teamId as `BUGUID`,
+   p_project.p_projectId as `ProjGUID`,
+   s_opportunity.s_opportunityId as `LeadUUID`,
+   s_customer.s_customerId as `CustUUID`,
+   CASE
+       WHEN s_opportunity.stage_id = '3' THEN '1'
+       WHEN s_opportunity.stage_id = '4' THEN '2'
+       WHEN s_opportunity.stage_id = '5' THEN '3'
+       WHEN s_opportunity.stage_id = '6' THEN '4'
+       ELSE '-1'
+   END as `CustStatus`,
+   CASE WHEN s_clue_cst.confirm_status = 1 THEN '分销'
+        WHEN s_clue_related_marketing.confirm_status = '3' THEN '行销'
+        ELSE '案场'
+   END as `NicheType`,
+   s_opportunity.cst_from as `NicheSource`,
+   s_user.s_userId as `FollowUserID`,
+   null as `Gzfm`,
+   s_opportunity.floor_wishe_ids as `Cpys`,
+   null as `Cpls`,
+   null as `Dblp`,
+   null as `Yhfa`,
+   s_opportunity.gjfs as `Fkfs`,
+   null as `Zycs`,
+   null as `Sfjcr`,
+   null as `Wxzd`,
+   null as `Xmrkd`,
+   null as `Dkqk`,
+   null as `Jycd`,
+   s_opportunity.DESC as `CustDesc`,
+   s_opportunity.type_wishe_ids as `Xqhx`,
+   s_opportunity.using_id as `Gfyt`,
+   s_opportunity.area_wishe_ids as `Xqmj`,
+   s_opportunity.known_id as `MediaParent`,
+   null as `Mttj`,
+   s_opportunity.price_wishe_ids as `Ghys`,
+   null as `NextDate`,
+   null as `SysTimeStamp`,
+   null as `CustLabel`,
+   s_opportunity.follow_level as `CustLevel`,
+   null as `CustLevelRemark`,
+   s_opportunity.customer_type as `LastCustLevel`,
+   s_opportunity.CreatedOn as `CreateDate`,
+   9999 as `CreateUserID`,
+   now() as `UpdateDate`,
+   9999 as `UpdateUserID`,
+   s_opportunity.first_time as `FirstDate`,
+   2 as `NewCust`,
+   null as `AssignedCause`,
+   null as `BtzdDate`,
+   null as `BtzdTxDate`,
+   null as `sfyz`,
+   null as `xqcq`,
+   null as `xqts`,
+   null as `TobeDist`,
+   null as `FinalFollowDate`,
+   null as `xqyt`,
+   null as `ifDisc`,
+   null as `btjd`,
+   s_opportunity.complete_ratio as `wsjd`,
+   null as `gjcs`,
+   null as `gjjz`,
+   null as `BUGUIDGS`,
+   null as `AREAID`,
+   null as `FirstMeetUserID`,
+   null as `IsMerge`,
+   null as `IsShare`,
+   CASE WHEN s_clue_cst.confirm_status = 1 THEN '分销'
+        WHEN s_clue_related_marketing.confirm_status = '3' THEN '行销'
+        ELSE '案场'
+   END as  `DataSource`,
+   null as `is_syn`,
+   null as `RedisHadDel`,
+   null as `IsFirstVisit`,
+   null as `IsHadFill`,
+   null as `IsNeedGK`,
+   null as `NeedGkFrom`,
+   null as `GKFollowUUID`,
+   null as `RecommendName`,
+   null as `stageId`,
+   null as `stageName`,
+   null as `contact_Date`,
+   null as `recommendId`,
+   null as `isFollowUp`,
+   null as `subScriptionDate`,
+   null as `signDate`,
+   null as `paymentDate`,
+   null as `isold2new`,
+   null as `isoldbuy`,
+   null as `iswwzj`,
+   null as `zjcompany`,
+   null as `yzroomno`,
+   null as `yzroomnoname`,
+   null as `yzname`,
+   null as `org_id`,
+   null as `type`,
+   null as `reception_date`,
+   null as `gjxw`,
+   null as `sysjobcode`,
+   null as `riskType`,
+   null as `riskUpdateTime`,
+   null as `motifyDate`,
+   s_customer.cst_name as `CstName`,
+   s_customer.mobile_tel as `MobileTel`,
+   s_opportunity.first_time as `recent_asking_time`,
+   s_user.s_userId as `last_follow_user_id`,
+   0 as `del_flag`,
+   s_opportunity.s_opportunityId as `syn_id`
+FROM
+    s_opportunity
+    LEFT JOIN s_customer ON s_customer.s_customerId = s_opportunity.cst_id
+    LEFT JOIN s_user ON s_user.s_userId = s_opportunity.user_id
+    LEFT JOIN p_project ON p_project.p_projectId = s_opportunity.proj_id
+    LEFT JOIN s_team2user ON s_user.s_userId = s_team2user.user_id AND s_team2user.proj_id = s_opportunity.proj_id
+    LEFT JOIN s_sales_team ON s_sales_team.s_sales_teamId = s_team2user.sales_team_id
+    LEFT JOIN s_sales_group ON s_sales_group.s_sales_groupId = s_team2user.sales_group_id
+    LEFT JOIN s_clue_cst ON s_clue_cst.related_opp_id = s_opportunity.s_opportunityId AND s_clue_cst.confirm_status = 1
+    LEFT JOIN s_clue ON s_clue.related_opp_id = s_opportunity.s_opportunityId AND s_clue.confirm_status = '3'
+    LEFT JOIN s_clue_related_marketing ON s_clue_related_marketing.clue_id = s_clue.id AND s_clue_related_marketing.confirm_status = '3'
+WHERE
+    ( s_opportunity.user_id != NULL OR s_opportunity.user_id != '' )
+    AND s_opportunity.is_conflict = 0
+    AND s_opportunity.is_repeat = 0
+    AND s_opportunity.status = 1;

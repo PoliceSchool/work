@@ -1,0 +1,30 @@
+-- 案场团队基本信息
+select
+    t.sales_team_name as `team_name`,
+    '案场' as `project_type`,
+    now() as `create_date`,
+    now() as `update_date`,
+    '9999' as `create_by`,
+    '9999' as `update_by`,
+    t.s_sales_teamId as `avatar`,
+    0 as `team_type`,
+    t.proj_id as `org_guid`,
+    0 as `status`,
+    null as `deldate`,
+s_sales_team t INNER JOIN p_project p ON t.proj_id=p.p_projectId
+
+-- 案场团队成员表需要新建中间表，因为团队成员涉及到角色和分组，目标表没有，需要把这份数据存放在中间库
+
+select
+     t.s_sales_teamId as `team_id`,
+     tu.user_id as `user_id`,
+     is_out_team as `status`,
+     null as `is_leader`,
+     tu.out_team_time as `quit_date`,
+     tu.CreatedOn as `add_date`,
+FROM
+s_team2user tu
+INNER JOIN s_user u ON tu.user_id=u.s_userId
+INNER JOIN s_sales_team t ON tu.sales_team_id=t.s_sales_teamId
+INNER JOIN s_sales_group g ON tu.sales_group_id=g.s_sales_groupId
+INNER JOIN p_project p ON tu.proj_id=p.p_projectId

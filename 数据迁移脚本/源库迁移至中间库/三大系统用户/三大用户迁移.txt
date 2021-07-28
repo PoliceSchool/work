@@ -1,0 +1,178 @@
+-- s_user 用户数据
+select
+    1 as `authenticated`,
+    null as `id_card_type`,
+    null as `id_card_no`,
+    user_name as `name`,
+    null as `gender`,
+    null as `birthday`,
+    null as `birth_place`,
+    null as `education`,
+    null as `work_area`,
+    null as `home_area`,
+    null as `industry`,
+    now() as `create_time`,
+    now() as `update_time`,
+    '系统数据迁移' as `create_person`,
+    '系统数据迁移' as `update_person`,
+    0 as `deleted`,
+    s_userId as `account_id`,
+    1004 as `app_id`,
+    null as `open_id`,
+    mobile_tel as `mobile`,
+    user_name as `nickname`,
+    null as `profile_picture`,
+    null as `signature`,
+    null as `mip`,
+    null as `password`,
+    (case isdisabled
+    when 0 then 1
+    else 2
+    end) as state,
+    null as `extra_params`,
+    s_userId as `uid`,
+    null as `authentication_id`,
+    null as `channel_type`,
+    null as `channel_name`,
+    null as `qrcode_template_id`,
+    's_user' as `register_channel`,
+    null as `start_time`,
+    null as `end_time`,
+    null as `union_id`,
+    null as `client_id`,
+    null as `examine_status`,
+    null as `examine_reason`,
+    null as `id_card_suffix`,
+    UserGUID as `erp_user_id`,
+    user_code as `erp_username`,
+    '置业顾问' as `APP_ROLE_MCRM`,
+    null as `APP_ROLE_ZITUO`
+from s_user
+union all
+-- m_member 用户数据
+select
+    1 as `authenticated`,
+    null as `id_card_type`,
+    id_card_number as `id_card_no`,
+    name as `name`,
+    CASE
+    WHEN `gender` = 0 THEN '1'
+    WHEN `gender` = 1 THEN '0'
+    WHEN `gender` = 2 THEN '1'
+    WHEN `gender` = '男' THEN '1'
+    WHEN `gender` = '女' THEN '0'
+    ELSE '1'
+    END AS `gender`,
+    null as `birthday`,
+    null as `birth_place`,
+    null as `education`,
+    null as `work_area`,
+    null as `home_area`,
+    null as `industry`,
+    now() as `create_time`,
+    now() as `update_time`,
+    '系统数据迁移' as `create_person`,
+    '系统数据迁移' as `update_person`,
+    0 as `deleted`,
+    uuid as `account_id`,
+    1002 as `app_id`,
+    null as `open_id`,
+    mobile_tel as `mobile`,
+    name as `nickname`,
+    null as `profile_picture`,
+    null as `signature`,
+    null as `mip`,
+    null as `password`,
+    (case status
+    when 'enable' then 1
+    else 2
+    end) as state,
+    null as `extra_params`,
+    uuid as `uid`,
+    null as `authentication_id`,
+    null as `channel_type`,
+    null as `channel_name`,
+    null as `qrcode_template_id`,
+    'm_member' as `register_channel`,
+    null as `start_time`,
+    null as `end_time`,
+    null as `union_id`,
+    null as `client_id`,
+    null as `examine_status`,
+    null as `examine_reason`,
+    null as `id_card_suffix`,
+    null as `erp_user_id`,
+    null as `erp_username`,
+    null as `APP_ROLE_MCRM`,
+    case role
+    when 'director' then '行销总监'
+    when 'manager' then '行销经理'
+    when 'saler' then '行销专员'
+    else '其他'
+    end as `APP_ROLE_ZITUO`
+from m_member
+union all
+-- b_regbroker 用户数据
+select
+    1 as `authenticated`,
+    case
+        when cre_type is null then 9
+        when cre_type = 0 then 9
+        when cre_type = 1 then 1
+        when cre_type = 2 then 4
+        when cre_type = 3 then 5
+        when cre_type = 4 then 9
+    end as `id_card_type`,
+    cre_no as `id_card_no`,
+    broker_name as `name`,
+    CASE
+        WHEN `gender` = 0 THEN '1'
+        WHEN `gender` = 1 THEN '0'
+        WHEN `gender` = 2 THEN '1'
+        WHEN `gender` = '男' THEN '1'
+        WHEN `gender` = '女' THEN '0'
+        ELSE '1'
+    END AS `gender`,
+    null as `birthday`,
+    null as `birth_place`,
+    capacity_des as `education`,
+    capacity_des as `work_area`,
+    capacity_des as `home_area`,
+    capacity_des as `industry`,
+    now() as `create_time`,
+    now() as `update_time`,
+    '系统数据迁移' as `create_person`,
+    '系统数据迁移' as `update_person`,
+    is_delete as `deleted`,
+    b_regbrokerId as `account_id`,
+    1000 as `app_id`,
+    null as `open_id`,
+    mobile_tel as `mobile`,
+    broker_name as `nickname`,
+    null as `profile_picture`,
+    null as `signature`,
+    null as `mip`,
+    null as `password`,
+    (case isdisabled
+    when 0 then 1
+    else 2
+    end) as state,
+    null as `extra_params`,
+    b_regbrokerId as `uid`,
+    null as `authentication_id`,
+    null as `channel_type`,
+    null as `channel_name`,
+    null as `qrcode_template_id`,
+    'b_regbroker' as `register_channel`,
+    null as `start_time`,
+    null as `end_time`,
+    null as `union_id`,
+    null as `client_id`,
+    null as `examine_status`,
+    null as `examine_reason`,
+    null as `id_card_suffix`,
+    null as `erp_user_id`,
+    null as `erp_username`,
+    null as `APP_ROLE_MCRM`,
+    null as `APP_ROLE_ZITUO`
+from b_regbroker;

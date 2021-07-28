@@ -1,0 +1,76 @@
+-- 中介机构合作项目
+select
+    b_agenciesId as `org_id`,
+    project_id as `product_id`,
+    start_date as `start_date`,
+    end_date as `end_date`,
+    is_activated as `dr`,
+    '9999' as `creator`,
+    now() as `create_time`,
+    '9999' as `update_person`,
+    now() as `update_time`,
+    null as `visit_min_hours`,
+FROM
+(
+SELECT
+b_agencies.b_agenciesId,
+b_agencies.agency_name,
+b_agency_project_partnership.project_id,
+p_project.ProjName,
+b_agency_project_partnership.is_activated,
+b_agency_project_partnership_contracts.start_date,
+b_agency_project_partnership_contracts.end_date,
+b_agency_project_partnership_contracts.created_at
+FROM
+b_agency_project_partnership
+JOIN b_agencies ON b_agencies.b_agenciesId = b_agency_project_partnership.agency_id
+JOIN b_agency_project_partnership_contracts ON b_agency_project_partnership_contracts.partnership_id = b_agency_project_partnership.partnership_id
+JOIN p_project ON p_project.p_projectId = b_agency_project_partnership.project_id
+WHERE
+b_agency_project_partnership.agency_type = 9108
+ORDER BY
+created_at DESC
+) AS t
+GROUP BY
+t.b_agenciesId,
+t.project_id
+union all
+-- 中介公司、合作伙伴、代理公司合作项目信息
+
+
+select
+    myParamValueId as `org_id`,
+    project_id as `product_id`,
+    start_date as `start_date`,
+    end_date as `end_date`,
+    is_activated as `dr`,
+    '9999' as `creator`,
+    now() as `create_time`,
+    '9999' as `update_person`,
+    now() as `update_time`,
+    null as `visit_min_hours`
+FROM
+    (
+    SELECT
+    myParamValue.myParamValueId,
+    myParamValue.Text,
+    b_agency_project_partnership.agency_type,
+    b_agency_project_partnership.project_id,
+    p_project.ProjName,
+    b_agency_project_partnership.is_activated,
+    b_agency_project_partnership_contracts.start_date,
+    b_agency_project_partnership_contracts.end_date,
+    b_agency_project_partnership_contracts.created_at
+    FROM
+    b_agency_project_partnership
+    JOIN myparamvalue ON myParamValue.myParamValueId = b_agency_project_partnership.agency_id
+    JOIN b_agency_project_partnership_contracts ON b_agency_project_partnership_contracts.partnership_id = b_agency_project_partnership.partnership_id
+    JOIN p_project ON p_project.p_projectId = b_agency_project_partnership.project_id
+    WHERE
+    b_agency_project_partnership.agency_type IN (9005, 9003, 9006)
+    ORDER BY
+    created_at DESC
+    ) AS t
+    GROUP BY
+    t.myParamValueId,
+    t.project_id;

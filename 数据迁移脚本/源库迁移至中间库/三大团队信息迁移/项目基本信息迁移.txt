@@ -1,0 +1,24 @@
+-- 项目基本信息
+select
+    p_projectId as `ProjGUID`,
+    BUGUID as `buguid`,
+    ProjCode as `ProjCode`,
+    ProjName as `ProjName`,
+    ParentCode as `ParentCode`,
+    p_projectId as `SynId`,
+    now() as `create_date`,
+    '9999' as `create_by`,
+    now() as `update_date`,
+    '9999' as `update_by`,
+    parentGUID as `parentGUID`
+from p_project;
+
+-- 用户所属项目信息
+select
+    tu.proj_id as `ProjGUID`,
+    tu.user_id as `UserGUID`,
+    now() as `CreateDate`,
+    null as `isEnabled`
+FROM s_team2user tu
+INNER JOIN s_user u ON tu.user_id=u.s_userId
+INNER JOIN p_project p ON tu.proj_id=p.p_projectId;

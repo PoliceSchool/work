@@ -1,0 +1,569 @@
+
+select
+        1004 as `app_id`,
+        null as `agent_product_id`,
+        null as `org_id`,
+        -- todo s_sales_team.sales_teamId, 连表查询团队表
+        null as `team_id`,
+        null as `product_id`,
+        s_opportunity.s_opportunityId as `product_name`,
+        p_project.p_projectId as `project_id`,
+        10041 as `type`,
+        s_user.s_userId as `account_id`,
+        s_user.user_name as `referrer_name`,
+        s_user.mobile_tel as `referrer_mobile`,
+        null as `referrer_id_card_no`,
+        s_customer.s_customerId as `account_id2`,
+        s_customer.cst_name as `name`,
+        case
+        when s_customer.gender = '男' then 1
+        when s_customer.gender = '女' then 0
+        end as `gender`,
+        s_customer.mobile_tel as `mobile`,
+        null as `appointment_time`,
+        s_sales_team.s_sales_teamId as `counselor_id`,
+        s_sales_team.sales_team_name as `counselor_name`,
+        s_user.mobile_tel as `counselor_mobile`,
+        null as `share_account_id`,
+        null as `share_mobile`,
+        CASE
+        WHEN s_opportunity.stage_id = '2' THEN 10
+        WHEN s_opportunity.stage_id = '3' THEN 30
+        WHEN s_opportunity.stage_id = '4' THEN 40
+        WHEN s_opportunity.stage_id = '5' THEN 50
+        WHEN s_opportunity.stage_id = '6' THEN 60
+        ELSE ''
+        END AS `clue_status`,
+        (case
+        WHEN s_opportunity.stage_id = '2' THEN '已提交'
+        WHEN s_opportunity.stage_id = '3' THEN '已到访'
+        WHEN s_opportunity.stage_id = '4' THEN '已认筹'
+        WHEN s_opportunity.stage_id = '5' THEN '已认购'
+        WHEN s_opportunity.stage_id = '6' THEN '已签约'
+        else -1 end) as `status_name`,
+        1 as `success`,
+        0 as `deleted`,
+        null as `relationship_name`,
+        null as `relationship_mobile`,
+        null as `relationship_sex`,
+        null as `relationship`,
+        s_opportunity.DESC as `description`,
+        null as `extra_params`,
+        1 as `expired`,
+        null as `expired_time`,
+        null as `expired_msg`,
+        null as `follow_up_time`,
+        null as `channel_type`,
+        null as `channel_name`,
+        null as `qrcode_template_id`,
+        now() as `create_time`,
+        now() as `update_time`,
+        '系统数据迁移' as `create_person`,
+        '系统数据迁移' as `update_person`,
+        null as `broker_invite_id`,
+        null as `broker_invite_expired_time`,
+        0 as `change_team_status`,
+        null as `task_id`,
+        null as `report_area`,
+        null as `bee_user_id`,
+        null as `protect_date`,
+        null as `method`,
+        null as `estate_id`,
+        null as `earliest_call_flag`,
+        null as `capacity`,
+        null as `cust_channel`,
+        -- todo 待云客提供，提供完再连表查询团队表
+        s_sales_team.s_sales_teamId as `BUGUID`,
+        p_project.p_projectId as `ProjGUID`,
+        s_customer.cst_name as `CstName`,
+        s_opportunity.known_id as `MediaName`,
+        s_customer.mobile_tel as `MobileTel`,
+        null as `AssignsNumber`,
+        null as `MeetUserID`,
+        s_opportunity.first_time as `CallDate`,
+        (CASE
+        WHEN s_opportunity.stage_id = '2' THEN 1
+        else 2
+        end) as `Status`,
+        null as `lead_status`,
+        null as `ProductType`,
+        null as `ResiArea`,
+        null as `Content`,
+        null as `SysTimeStamp`,
+        s_opportunity.CreatedOn  as `CreateDate`,
+        9999 as `CreateUserID`,
+        now() as `UpdateDate`,
+        9999 as `UpdateUserID`,
+        null as `MediaParent`,
+        s_opportunity.complete_ratio as `AssignedCause`,
+        null as `AssignsDate`,
+        0 as `AskingNumber`,
+        -- todo  通过suer.s_userId连表查person_account表得到自增主键ID
+        null as `FollowUserID`,
+        null as `WXZD`,
+        10041 as `ReportedChannel`,
+        null as `AssignBroker`,
+        '案场' as `ChildChannel`,
+        null as `FirstMeetUserID`,
+        6 as `RecommendAgentIdentity`,
+        null as `BUGUIDGS`,
+        null as `OperatorID`,
+        null as `OperatorName`,
+        null as `RecommendAgentName`,
+        null as `SynId`,
+        '案场' as `DataSource`,
+        null as `RedisHadDel`,
+        null as `brokerPhone`,
+        null as `idCard`,
+        now() as `create_date`,
+        '系统数据迁移' as `create_by`,
+        now() as `update_date`,
+        '系统数据迁移' as `update_by`,
+        null as `recommendId`,
+        null as `protectRule`,
+        case
+        when s_customer.gender = '男' then 1
+        when s_customer.gender = '女' then 0
+        end as `CstSex`,
+        null as `OrgId`,
+        s_opportunity.type_wishe_ids as `Xqhx`,
+        s_opportunity.price_wishe_ids as `Ghys`,
+        s_customer.work_type_id as `Industry`,
+        s_opportunity.DESC as `Remarks`,
+        s_opportunity.using_id as `Gfyt`,
+        s_opportunity.follow_level as `CustLevel`,
+        s_opportunity.customer_type as `userTypeId`,
+        s_opportunity.recover_time  as `userTypeName`,
+        s_opportunity.s_opportunityId as `wayName`,
+        null as `intention_house_type`,
+        s_opportunity.area_wishe_ids as `intention_area`,
+        s_opportunity.floor_wishe_ids as `channel`,
+        s_customer.home_id as `HomeArea`,
+        s_opportunity.attention_ids as `JZ_SHENG`,
+        s_opportunity.cst_from as `JZ_SHI`,
+        s_customer.address as `JZ_QU`,
+        null as `JZ_ZHEN`,
+        s_customer.work_area_id as `WorkArea`,
+        s_customer.house_count_id as `GZ_SHENG`,
+        null as `GZ_SHI`,
+        null as `GZ_QU`,
+        null as `GZ_ZHEN`,
+        null as `sysjobcode`,
+        null as `AppId`,
+        null as `extraParams`,
+        null as `zituo_label_id`,
+        null as `zituo_method_id`,
+        -- todo 通过m.uuid连表查person_account表得到自增主键ID
+        null as `zituo_submit_user_id`,
+        -- todo 通过m.uuid连表查person_account表得到自增主键ID
+        null as `zituo_report_user_id`,
+        null as `zituo_report_area`,
+        null as `zituo_task_id`,
+        null as `zituo_longitude`,
+        null as `zituo_latitude`,
+        s_opportunity.recover_reason as `lost_reason`,
+        null as `if_scan`,
+        null as `distr_cause`,
+        s_opportunity.first_time as `recent_asking_time`,
+        s_opportunity.recover_count as `event_counter`,
+        null as `project_rule`,
+        now() as `BHQJZRQ`,
+        null as `CreateDate_Follow`,
+        -- todo 通过m.uuid连表查person_account表得到自增主键ID
+        null as `last_follow_user_id`,
+        0 as `del_flag`
+        from
+        s_opportunity
+        LEFT JOIN s_customer ON s_customer.s_customerId = s_opportunity.cst_id
+        LEFT JOIN s_user ON s_user.s_userId = s_opportunity.user_id
+        LEFT JOIN p_project ON p_project.p_projectId = s_opportunity.proj_id
+        LEFT JOIN s_team2user ON s_user.s_userId = s_team2user.user_id AND s_team2user.proj_id = s_opportunity.proj_id
+        LEFT JOIN s_sales_team ON s_sales_team.s_sales_teamId = s_team2user.sales_team_id
+        LEFT JOIN s_sales_group ON s_sales_group.s_sales_groupId = s_team2user.sales_group_id
+        LEFT JOIN s_clue_cst ON s_clue_cst.related_opp_id = s_opportunity.s_opportunityId AND s_clue_cst.confirm_status = 1
+        LEFT JOIN s_clue ON s_clue.related_opp_id = s_opportunity.s_opportunityId AND s_clue.confirm_status = '3'
+        LEFT JOIN s_clue_related_marketing ON s_clue_related_marketing.clue_id = s_clue.id AND s_clue_related_marketing.confirm_status = '3'
+        union all
+
+        select
+        1001 as `app_id`,
+        null as `agent_product_id`,
+        null as `org_id`,
+        -- todo 待云客提供，提供完再连表查询团队表
+        null as `team_id`,
+        null as `product_id`,
+        r.b_regbroker_cst_projId as `product_name`,
+        r.proj_id as `project_id`,
+        1001 as `type`,
+        b_regbroker.b_regbrokerId as `account_id`,
+        b_regbroker.broker_name as `referrer_name`,
+        b_regbroker.mobile_tel as `referrer_mobile`,
+        b_regbroker.cre_no as `referrer_id_card_no`,
+        c.b_regbroker_cstId as `account_id2`,
+        s.cst_name as `name`,
+        case
+        when s.gender = 0 then 1
+        else 0
+        end as `gender`,
+        s.cst_tel as `mobile`,
+        null as `appointment_time`,
+        suer.s_userId as `counselor_id`,
+        suer.user_name as `counselor_name`,
+        suer.mobile_tel as `counselor_mobile`,
+        null as `share_account_id`,
+        null as `share_mobile`,
+        case
+        when r.stage_id = 2 then 10
+        when r.stage_id = 3 then 30
+        when r.stage_id = 4 then 40
+        when r.stage_id = 5 then 50
+        when r.stage_id = 6 then 60
+        end  as `clue_status`,
+        case
+        when r.stage_id = 2 then '已提交'
+        when r.stage_id = 3 then '已到访'
+        when r.stage_id = 4 then '已认筹'
+        when r.stage_id = 5 then '已认购'
+        when r.stage_id = 6 then '已签约'
+        end  as `status_name`,
+        1 as `success`,
+        0 as `deleted`,
+        null as `relationship_name`,
+        null as `relationship_mobile`,
+        null as `relationship_sex`,
+        null as `relationship`,
+        c.description as `description`,
+        null as `extra_params`,
+        case
+        when s.`confirm_status` = 0 then 0
+        when s.`confirm_status` = 1 then 1
+        when s.`confirm_status` = 2 then -1
+        end as `expired`,
+        null as `expired_time`,
+        null as `expired_msg`,
+        null as `follow_up_time`,
+        null as `channel_type`,
+        null as `channel_name`,
+        null as `qrcode_template_id`,
+        now() as `create_time`,
+        now() as `update_time`,
+        '系统数据迁移' as `create_person`,
+        '系统数据迁移' as `update_person`,
+        null as `broker_invite_id`,
+        null as `broker_invite_expired_time`,
+        0 as `change_team_status`,
+        null as `task_id`,
+        null as `report_area`,
+        null as `bee_user_id`,
+        s.expired_date as `protect_date`,
+        null as `method`,
+        null as `estate_id`,
+        null as `earliest_call_flag`,
+        b_regbroker.capacity_des as `capacity`,
+        null as `cust_channel`,
+        -- todo 待云客提供，提供完再连表查询团队表
+        null as `BUGUID`,
+        r.proj_id as `ProjGUID`,
+        s.cst_name as `CstName`,
+        null as `MediaName`,
+        s.cst_tel as `MobileTel`,
+        null as `AssignsNumber`,
+        null as `MeetUserID`,
+        null as `CallDate`,
+        case
+        when r.stage_id = 2 then 1
+        else 2
+        end as `Status`,
+        null as `lead_status`,
+        null as `ProductType`,
+        null as `ResiArea`,
+        null as `Content`,
+        null as `SysTimeStamp`,
+        now() as `CreateDate`,
+        9999 as `CreateUserID`,
+        now() as `UpdateDate`,
+        9999 as `UpdateUserID`,
+        null as `MediaParent`,
+        null as `AssignedCause`,
+        null as `AssignsDate`,
+        0 as `AskingNumber`,
+        -- todo  通过suer.s_userId连表查person_account表得到自增主键ID
+        null as `FollowUserID`,
+        null as `WXZD`,
+        10002 as `ReportedChannel`,
+        null as `AssignBroker`,
+        '分销' as `ChildChannel`,
+        null as `FirstMeetUserID`,
+        1000 as `RecommendAgentIdentity`,
+        null as `BUGUIDGS`,
+        null as `OperatorID`,
+        null as `OperatorName`,
+        b_regbroker.broker_name as `RecommendAgentName`,
+        null as `SynId`,
+        '分销' as `DataSource`,
+        null as `RedisHadDel`,
+        b_regbroker.mobile_tel as `brokerPhone`,
+        b_regbroker.cre_no as `idCard`,
+        now() as `create_date`,
+        '系统数据迁移' as `create_by`,
+        now() as `update_date`,
+        '系统数据迁移' as `update_by`,
+        null as `recommendId`,
+        null as `protectRule`,
+        case
+        when s.gender = 0 then 1
+        else 0
+        end as `CstSex`,
+        null as `OrgId`,
+        null as `Xqhx`,
+        null as `Ghys`,
+        null as `Industry`,
+        c.description as `Remarks`,
+        null as `Gfyt`,
+        null as `CustLevel`,
+        null as `userTypeId`,
+        null as `userTypeName`,
+        r.b_regbroker_cst_projId as `wayName`,
+        null as `intention_house_type`,
+        null as `intention_area`,
+        null as `channel`,
+        null as `HomeArea`,
+        null as `JZ_SHENG`,
+        null as `JZ_SHI`,
+        null as `JZ_QU`,
+        null as `JZ_ZHEN`,
+        null as `WorkArea`,
+        null as `GZ_SHENG`,
+        null as `GZ_SHI`,
+        null as `GZ_QU`,
+        null as `GZ_ZHEN`,
+        null as `sysjobcode`,
+        null as `AppId`,
+        null as `extraParams`,
+        null as `zituo_label_id`,
+        null as `zituo_method_id`,
+        null as `zituo_submit_user_id`,
+        null as `zituo_report_user_id`,
+        null as `zituo_report_area`,
+        null as `zituo_task_id`,
+        null as `zituo_longitude`,
+        null as `zituo_latitude`,
+        null as `lost_reason`,
+        null as `if_scan`,
+        null as `distr_cause`,
+        i.last_visit_date as `recent_asking_time`,
+        0 as `event_counter`,
+        null as `project_rule`,
+        s.expired_date as `BHQJZRQ`,
+        null as `CreateDate_Follow`,
+        -- todo 通过suer.s_userId连表查person_account表得到自增主键ID
+        null as `last_follow_user_id`,
+        0 as `del_flag`
+        FROM `b_regbroker_cst_proj` r
+        INNER JOIN b_regbroker_cst c ON c.b_regbroker_cstId = r.cst_id
+        INNER JOIN b_regbroker on b_regbroker.b_regbrokerId = r.regbroker_id
+        INNER JOIN s_clue_cst s ON s.uuid = r.clue_uuid
+        INNER JOIN p_project p ON r.proj_id = p.p_projectId
+        INNER JOIN b_cst_statistics_info i ON r.b_regbroker_cst_projId = i.cst_proj_id
+        INNER JOIN s_user suer ON r.point_saleId = suer.s_userId
+        union all
+
+        select
+        1002 as `app_id`,
+        null as `agent_product_id`,
+        null as `org_id`,
+        -- todo t.uuid, 连表查询团队表
+        null as `team_id`,
+        null as `product_id`,
+        mcp.uuid as `product_name`,
+        mcp.proj_id as `project_id`,
+        10021 as `type`,
+        m.uuid as `account_id`,
+        m.name as `referrer_name`,
+        m.mobile_tel as `referrer_mobile`,
+        null as `referrer_id_card_no`,
+        mc.uuid as `account_id2`,
+        crm.cst_name as `name`,
+        case
+        when crm.gender = '男' then 1
+        else 0
+        end as `gender`,
+        crm.cst_tel as `mobile`,
+        null as `appointment_time`,
+        t.uuid as `counselor_id`,
+        t.name as `counselor_name`,
+        null as `counselor_mobile`,
+        null as `share_account_id`,
+        null as `share_mobile`,
+        (case
+        when mcp.confirm_status = 0 then 31
+        when mcp.confirm_status = 1 or mcp.confirm_status = 2  then 10
+        when mcp.confirm_status = 3 and ( mcp.gj_status = 2 or mcp.gj_status is null)  then 30
+        when mcp.confirm_status = 3 and mcp.gj_status = 3  then 30
+        when mcp.confirm_status = 3 and mcp.gj_status = 4  then 40
+        when mcp.confirm_status = 3 and mcp.gj_status = 5 and cpt.is_rg = 1  then 50
+        when mcp.confirm_status = 3 and mcp.gj_status = 6 and cpt.is_qy = 1  then 60
+        else -1 end) as `clue_status`,
+        (case
+        when mcp.confirm_status = 0 then '已失效'
+        when mcp.confirm_status = 1 or mcp.confirm_status = 2  then '已提交'
+        when mcp.confirm_status = 3 and ( mcp.gj_status = 2 or mcp.gj_status is null)  then '已到访'
+        when mcp.confirm_status = 3 and mcp.gj_status = 3  then '已到访'
+        when mcp.confirm_status = 3 and mcp.gj_status = 4  then '已认筹'
+        when mcp.confirm_status = 3 and mcp.gj_status = 5 and cpt.is_rg = 1  then '已认购'
+        when mcp.confirm_status = 3 and mcp.gj_status = 6 and cpt.is_qy = 1  then '已签约'
+        else -1 end) as `status_name`,
+        1 as `success`,
+        0 as `deleted`,
+        null as `relationship_name`,
+        null as `relationship_mobile`,
+        null as `relationship_sex`,
+        null as `relationship`,
+        mpv.Text as `description`,
+        null as `extra_params`,
+        1 as `expired`,
+        null as `expired_time`,
+        null as `expired_msg`,
+        null as `follow_up_time`,
+        null as `channel_type`,
+        null as `channel_name`,
+        null as `qrcode_template_id`,
+        now() as `create_time`,
+        now() as `update_time`,
+        '系统数据迁移' as `create_person`,
+        '系统数据迁移' as `update_person`,
+        null as `broker_invite_id`,
+        null as `broker_invite_expired_time`,
+        0 as `change_team_status`,
+        null as `task_id`,
+        null as `report_area`,
+        null as `bee_user_id`,
+        mcp.expired_date as `protect_date`,
+        null as `method`,
+        null as `estate_id`,
+        null as `earliest_call_flag`,
+        null as `capacity`,
+        null as `cust_channel`,
+        -- todo 待云客提供，提供完再连表查询团队表
+        null as `BUGUID`,
+        mcp.proj_id as `ProjGUID`,
+        crm.cst_name as `CstName`,
+        null as `MediaName`,
+        crm.cst_tel as `MobileTel`,
+        null as `AssignsNumber`,
+        null as `MeetUserID`,
+        mcp.first_report_time as `CallDate`,
+        (case
+        when mcp.confirm_status = 1 or mcp.confirm_status = 2  then 1
+        else 2
+        end) as `Status`,
+        null as `lead_status`,
+        null as `ProductType`,
+        null as `ResiArea`,
+        null as `Content`,
+        null as `SysTimeStamp`,
+        now() as `CreateDate`,
+        9999 as `CreateUserID`,
+        now() as `UpdateDate`,
+        9999 as `UpdateUserID`,
+        null as `MediaParent`,
+        null as `AssignedCause`,
+        null as `AssignsDate`,
+        0 as `AskingNumber`,
+        -- todo  通过suer.s_userId连表查person_account表得到自增主键ID
+        null as `FollowUserID`,
+        null as `WXZD`,
+        10021 as `ReportedChannel`,
+        null as `AssignBroker`,
+        '行销' as `ChildChannel`,
+        null as `FirstMeetUserID`,
+        21 as `RecommendAgentIdentity`,
+        null as `BUGUIDGS`,
+        null as `OperatorID`,
+        null as `OperatorName`,
+        m.name as `RecommendAgentName`,
+        null as `SynId`,
+        '行销' as `DataSource`,
+        null as `RedisHadDel`,
+        m.mobile_tel as `brokerPhone`,
+        null as `idCard`,
+        now() as `create_date`,
+        '系统数据迁移' as `create_by`,
+        now() as `update_date`,
+        '系统数据迁移' as `update_by`,
+        null as `recommendId`,
+        null as `protectRule`,
+        case
+        when crm.gender = '男' then 1
+        else 0
+        end as `CstSex`,
+        null as `OrgId`,
+        null as `Xqhx`,
+        null as `Ghys`,
+        null as `Industry`,
+        mpv.Text as `Remarks`,
+        null as `Gfyt`,
+        null as `CustLevel`,
+        null as `userTypeId`,
+        null as `userTypeName`,
+        mcp.uuid as `wayName`,
+        null as `intention_house_type`,
+        null as `intention_area`,
+        null as `channel`,
+        null as `HomeArea`,
+        null as `JZ_SHENG`,
+        null as `JZ_SHI`,
+        null as `JZ_QU`,
+        null as `JZ_ZHEN`,
+        null as `WorkArea`,
+        null as `GZ_SHENG`,
+        null as `GZ_SHI`,
+        null as `GZ_QU`,
+        null as `GZ_ZHEN`,
+        null as `sysjobcode`,
+        null as `AppId`,
+        null as `extraParams`,
+        null as `zituo_label_id`,
+        null as `zituo_method_id`,
+        -- todo 通过m.uuid连表查person_account表得到自增主键ID
+        null as `zituo_submit_user_id`,
+        -- todo 通过m.uuid连表查person_account表得到自增主键ID
+        null as `zituo_report_user_id`,
+        mcp.address as `zituo_report_area`,
+        null as `zituo_task_id`,
+        tg.uuid as `zituo_longitude`,
+        tg.act_name as `zituo_latitude`,
+        (case
+        when tg.task_type = 1 and tg.act_type_id = 1 then '派单举牌'
+        when tg.task_type = 1 and tg.act_type_id = 2 then '竞品拦截'
+        when tg.task_type = 1 and tg.act_type_id = 3 then '社区巡展'
+        when tg.task_type = 1 and tg.act_type_id = 4 then '商圈巡展'
+        when tg.task_type = 1 and tg.act_type_id = 5 then '商铺扫街'
+        when tg.task_type = 1 and tg.act_type_id = 6 then '商户合作'
+        when tg.task_type = 1 and tg.act_type_id = 7 then '电开Call客'
+        when tg.task_type = 1 and tg.act_type_id = 8 then '大客户拓客'
+        when tg.task_type = 1 and tg.act_type_id = 9 then '圈层拓客'
+        when tg.task_type = 2 then '添加大客户'
+        else '' end) as `lost_reason`,
+        null as `if_scan`,
+        null as `distr_cause`,
+        mcp.last_report_time as `recent_asking_time`,
+        0 as `event_counter`,
+        null as `project_rule`,
+        mcp.expired_date as `BHQJZRQ`,
+        null as `CreateDate_Follow`,
+        -- todo 通过m.uuid连表查person_account表得到自增主键ID
+        null as `last_follow_user_id`,
+        0 as `del_flag`
+        from m_member_cst_proj as mcp
+        INNER JOIN m_member_cst mc on mcp.cst_id = mc.id
+        INNER JOIN s_clue_related_marketing crm on mcp.clue_related_id = crm.id
+        INNER JOIN s_clue c on crm.clue_id = c.id
+        INNER JOIN m_member m on mcp.member_id = m.id
+        INNER JOIN m_team t on mcp.team_id = t.id
+        INNER JOIN m_task_group tg on mcp.task_group_id = tg.id
+        INNER JOIN p_project p on mcp.proj_id = p.p_projectId
+        LEFT JOIN  m_cst_proj_trade cpt on mcp.id = cpt.cst_proj_id and cpt.trade_status='激活'
+        -- 关联查询案场中的来源文案
+        LEFT JOIN myparamvalue mpv ON mcp.recommend_source = mpv.Value AND mcp.proj_id = mpv.ScopeId
+        AND mcp.recommend_source_type = mpv.OptionType AND mpv.Applications = 5002 AND mpv.ParamCode = 'cus_from'
